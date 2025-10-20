@@ -59,12 +59,18 @@ h1 {
 </head>
 <body>
 
-<iframe class="bg" src="background.html"></iframe>
-<iframe class="chart" src="chart.html"></iframe>
+<iframe class="bg"></iframe>
+<iframe class="chart"></iframe>
 
 <div class="main">
   <h1>GO LONG ON LUHV 💗</h1>
 </div>
+
+<script>
+const v = Date.now(); // unique timestamp
+document.querySelector('.bg').src = `background.html?v=${v}`;
+document.querySelector('.chart').src = `chart.html?v=${v}`;
+</script>
 
 </body>
 </html>
