@@ -3,86 +3,108 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>LUHV Chart</title>
+<title>LUHV Live Chart</title>
 <style>
 html,body{
   margin:0;
   height:100%;
   background:transparent;
+  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
 }
 canvas{
-  width:90%;
-  height:70%;
-  border-radius:12px;
-  background:rgba(255,255,255,0.15);
+  width:100%;
+  height:100%;
 }
 </style>
 </head>
 <body>
-<canvas id="chart" width="400" height="250"></canvas>
+<canvas id="chart"></canvas>
 
 <script>
-const c = document.getElementById("chart");
-const ctx = c.getContext("2d");
+const canvas = document.getElementById("chart");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 let hearts = [];
+let points = [];
 let t = 0;
+let price = 100; // base LUHV value
 
-// spawn 1 heart occasionally
-function spawnHeart(){
-  hearts.push({
-    x: 80 + Math.random()*40,
-    y: 180,
-    size: 6 + Math.random()*3,
-    alpha: 1,
-    speed: 0.5 + Math.random()*0.5
-  });
-}
-
-// draw heart
-function drawHeart(h){
+// Heart template
+function drawHeart(x,y,size,alpha){
   ctx.save();
-  ctx.translate(h.x, h.y);
-  ctx.scale(h.size, h.size);
+  ctx.translate(x,y);
+  ctx.scale(size,size);
   ctx.beginPath();
   ctx.moveTo(0,0);
   ctx.bezierCurveTo(-0.5,-0.5,-1,0.3,0,1);
   ctx.bezierCurveTo(1,0.3,0.5,-0.5,0,0);
-  ctx.fillStyle = `rgba(255,105,180,${h.alpha})`;
+  ctx.fillStyle = `rgba(255,105,180,${alpha})`;
   ctx.fill();
   ctx.restore();
 }
 
-// main animate
-function animate(){
-  ctx.clearRect(0,0,c.width,c.height);
+// Generate new heart
+function spawnHeart(){
+  const x = canvas.width - 60;
+  const y = canvas.height - (price/2);
+  hearts.push({x,y,alpha:1,size:5,vy:-1-Math.random()*1});
+}
 
-  // simple “L” shape
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = "#ff1493";
+// Simulate new LUHV hit (price only goes up)
+function updatePrice(){
+  const step = Math.random() * 2; // always positive
+  price += step;
+  if (price > canvas.height*0.8) price = 100; // wrap to keep visible
+  points.push(price);
+  if (points.length > 200) points.shift();
+  spawnHeart();
+}
+
+function drawChartLine(){
   ctx.beginPath();
-  ctx.moveTo(50, 200);
-  ctx.lineTo(50, 120);
-  ctx.lineTo(300, 120);
+  ctx.moveTo(0, canvas.height - points[0]);
+  for(let i=1;i<points.length;i++){
+    const x = (i/200)*canvas.width;
+    const y = canvas.height - points[i];
+    ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle="#ff1493";
+  ctx.lineWidth=2;
   ctx.stroke();
+}
 
-  // hearts update
-  if (t % 30 === 0) spawnHeart();
-  for (let i=hearts.length-1; i>=0; i--){
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  
+  // chart line
+  drawChartLine();
+
+  // hearts
+  for (let i=hearts.length-1;i>=0;i--){
     const h = hearts[i];
-    h.y -= h.speed * 2;
+    h.y += h.vy;
     h.alpha -= 0.01;
-    drawHeart(h);
+    drawHeart(h.x,h.y,h.size/6,h.alpha);
     if (h.alpha <= 0) hearts.splice(i,1);
   }
 
+  // occasional new LUHV hit
+  if (t % 20 === 0) updatePrice();
+  
   t++;
   requestAnimationFrame(animate);
 }
 animate();
+
+window.addEventListener('resize',()=>{
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 </script>
 </body>
 </html>
