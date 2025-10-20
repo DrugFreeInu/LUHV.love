@@ -15,6 +15,7 @@ html, body {
   background: transparent;
 }
 
+/* Background gradient frame */
 iframe.bg {
   position: fixed;
   top: 0;
@@ -25,6 +26,7 @@ iframe.bg {
   z-index: 0;
 }
 
+/* Chart stays visible below the LUHV text */
 iframe.chart {
   position: absolute;
   bottom: 0;
@@ -35,13 +37,15 @@ iframe.chart {
   border: none;
   border-radius: 12px;
   z-index: 1;
+  pointer-events: none; /* prevents blocking */
+  opacity: 1; /* ensure visible */
 }
 
-/* main layout */
+/* Text layer above */
 .main {
   position: relative;
   z-index: 2;
-  height: 40%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,12 +62,12 @@ iframe.chart {
   margin: 0;
 }
 
-/* Tightened G and O spacing */
+/* Adjusted spacing */
 .word.go {
   font-size: 4rem;
-  letter-spacing: 0.05em; /* tighter spacing */
-  transform: scaleX(1.2); /* slightly less stretch for balance */
-  margin-bottom: -6px;
+  letter-spacing: 0.05em;
+  transform: scaleX(1.2);
+  margin-bottom: -8px;
 }
 
 .word.f4eva {
@@ -75,7 +79,7 @@ iframe.chart {
 
 .word.on {
   font-size: 4rem;
-  letter-spacing: 0.05em; /* less space between O and N */
+  letter-spacing: 0.05em;
   transform: scaleX(1.2);
   margin-top: -10px;
   margin-bottom: -5px;
