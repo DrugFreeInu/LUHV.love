@@ -12,7 +12,6 @@ html, body {
   overflow: hidden;
   position: relative;
   font-family: monospace;
-  color: #ff1493;
   background: transparent;
 }
 
@@ -38,22 +37,40 @@ iframe.chart {
   z-index: 1;
 }
 
+/* main text layout */
 .main {
   position: relative;
   z-index: 2;
   height: 40%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  line-height: 1.1;
 }
 
-h1 {
-  font-size: 2rem;
-  letter-spacing: 1px;
+.word {
   background: linear-gradient(90deg, #ff1493, #ff7fcd, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  margin: 0;
+}
+
+.word.go, .word.on {
+  font-size: 4rem;
+  letter-spacing: 0.2em;
+  transform: scaleX(1.4);
+}
+
+.word.f4eva, .word.luhv {
+  font-size: 2.3rem;
+  letter-spacing: 0.1em;
+}
+
+.word.luhv {
+  text-shadow: 0 0 8px rgba(255,255,255,0.4);
 }
 </style>
 </head>
@@ -63,11 +80,14 @@ h1 {
 <iframe class="chart"></iframe>
 
 <div class="main">
-  <h1>GO 4EVA ON LUHV 💗</h1>
+  <h1 class="word go">GO</h1>
+  <h1 class="word f4eva">4EVA</h1>
+  <h1 class="word on">ON</h1>
+  <h1 class="word luhv">LUHV 💗</h1>
 </div>
 
 <script>
-const v = Date.now(); // auto cache-busting
+const v = Date.now(); // cache-busting
 document.querySelector('.bg').src = `background.html?v=${v}`;
 document.querySelector('.chart').src = `chart.html?v=${v}`;
 </script>
