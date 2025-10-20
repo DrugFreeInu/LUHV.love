@@ -46,6 +46,8 @@ iframe.chart {
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
 h1 {
@@ -54,6 +56,24 @@ h1 {
   background: linear-gradient(90deg, #ff1493, #ff7fcd, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+button {
+  background: #ff1493;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 15px rgba(255,20,147,0.3);
+}
+button:hover {
+  background: #ff66b5;
+  box-shadow: 0 0 25px rgba(255,20,147,0.6);
+  transform: scale(1.05);
 }
 </style>
 </head>
@@ -64,13 +84,24 @@ h1 {
 
 <div class="main">
   <h1>GO LONG ON LUHV 💗</h1>
+  <button id="startBtn">Go Long 💗</button>
 </div>
 
 <script>
-const v = Date.now(); // unique timestamp
+const v = Date.now();
 document.querySelector('.bg').src = `background.html?v=${v}`;
 document.querySelector('.chart').src = `chart.html?v=${v}`;
-</script>
 
+const startBtn = document.getElementById('startBtn');
+
+// send message to chart frame
+startBtn.addEventListener('click', () => {
+  const chartFrame = document.querySelector('.chart').contentWindow;
+  chartFrame.postMessage({ type: 'startRise' }, '*');
+  startBtn.textContent = "Position Open 💞";
+  startBtn.disabled = true;
+  startBtn.style.opacity = "0.7";
+});
+</script>
 </body>
 </html>
