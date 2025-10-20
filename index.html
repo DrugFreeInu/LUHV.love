@@ -37,7 +37,7 @@ iframe.chart {
   z-index: 1;
 }
 
-/* main text layout */
+/* main layout */
 .main {
   position: relative;
   z-index: 2;
@@ -47,7 +47,7 @@ iframe.chart {
   align-items: center;
   justify-content: center;
   text-align: center;
-  line-height: 1.1;
+  line-height: 0.9; /* tightened vertical spacing */
 }
 
 .word {
@@ -58,19 +58,33 @@ iframe.chart {
   margin: 0;
 }
 
-.word.go, .word.on {
+.word.go {
   font-size: 4rem;
   letter-spacing: 0.2em;
   transform: scaleX(1.4);
+  margin-bottom: -5px; /* closer to 4EVA */
 }
 
-.word.f4eva, .word.luhv {
+.word.f4eva {
   font-size: 2.3rem;
   letter-spacing: 0.1em;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+.word.on {
+  font-size: 4rem;
+  letter-spacing: 0.2em;
+  transform: scaleX(1.4);
+  margin-top: -10px; /* moves ON upward closer to GO */
+  margin-bottom: -5px;
 }
 
 .word.luhv {
+  font-size: 2.3rem;
+  letter-spacing: 0.1em;
   text-shadow: 0 0 8px rgba(255,255,255,0.4);
+  margin-top: -2px;
 }
 </style>
 </head>
