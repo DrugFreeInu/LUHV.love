@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Go Long on LUHV 💗</title>
+<style>
+html,body{
+  margin:0;
+  height:100%;
+  background:linear-gradient(135deg,#ff1493 0%,#ffffff 100%);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:monospace;
+}
+
+canvas{
+  border-radius:12px;
+  background:rgba(255,255,255,0.15);
+  box-shadow:0 0 20px rgba(255,20,147,0.3);
+}
+
+#controls{
+  position:absolute;
+  bottom:40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+
+button{
+  background:#ff1493;
+  color:#fff;
+  font-weight:bold;
+  border:none;
+  border-radius:8px;
+  padding:10px 25px;
+  cursor:pointer;
+  box-shadow:0 0 10px rgba(255,20,147,0.4);
+  transition:all .3s ease;
+}
+button:hover{
+  background:#ff4fbf;
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(255,20,147,0.6);
+}
+
+input[type=range]{
+  width:200px;
+  accent-color:#ff1493;
+}
+
+label{
+  color:#ff1493;
+  font-size:1rem;
+}
+</style>
+</head>
+<body>
+<canvas id="chart" width="400" height="250"></canvas>
+
+<div id="controls">
+  <button id="leverBtn">Lay Leverage 💗</button>
+  <label for="leverage">Go Long on LUHV:</label>
+  <input id="leverage" type="range" min="1" max="10" step="0.1" value="1">
+</div>
+
+<script>
+const c = document.getElementById("chart");
+const ctx = c.getContext("2d");
+let t = 0;
+let leverage = 1;
+
+// Heart shape
+function drawHeart(x,y,size,color){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.scale(size,size);
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  ctx.bezierCurveTo(-0.5,-0.5,-1,0.3,0,1);
+  ctx.bezierCurveTo(1,0.3,0.5,-0.5,0,0);
+  ctx.fillStyle=color;
+  ctx.fill();
+  ctx.restore();
+}
+
+function animate(){
+  ctx.clearRect(0,0,c.width,c.height);
+  let baseY = c.height*0.8;
+  let amp = 40 * leverage;
+  let spacing = 15;
+  for(let i=0;i<50;i++){
+    let x = i*spacing - (t%spacing);
+    let y = baseY - Math.sin((i+t/20))*amp - i*0.8*leverage;
+    let color = `hsl(${330 + (i*3)%30},100%,70%)`;
+    drawHeart(x,y,6,"#ff69b4");
+    drawHeart(x,y,4,color);
+  }
+  t += 0.8 * leverage;
+  requestAnimationFrame(animate);
+}
+animate();
+
+// controls
+const slider = document.getElementById("leverage");
+slider.addEventListener("input", e => leverage = parseFloat(e.target.value));
+
+const btn = document.getElementById("leverBtn");
+btn.addEventListener("click", ()=>{
+  leverage = 5;
+  slider.value = 5;
+  btn.textContent = "MAX LEVERAGE 🚀";
+  setTimeout(()=>{btn.textContent="Lay Leverage 💗";},1500);
+});
+</script>
+</body>
+</html>
