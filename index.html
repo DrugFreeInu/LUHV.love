@@ -47,7 +47,7 @@ iframe.chart {
   align-items: center;
   justify-content: center;
   text-align: center;
-  line-height: 0.9; /* tightened vertical spacing */
+  line-height: 0.9;
 }
 
 .word {
@@ -58,31 +58,32 @@ iframe.chart {
   margin: 0;
 }
 
+/* Tightened G and O spacing */
 .word.go {
   font-size: 4rem;
-  letter-spacing: 0.2em;
-  transform: scaleX(1.4);
-  margin-bottom: -5px; /* closer to 4EVA */
+  letter-spacing: 0.05em; /* tighter spacing */
+  transform: scaleX(1.2); /* slightly less stretch for balance */
+  margin-bottom: -6px;
 }
 
 .word.f4eva {
   font-size: 2.3rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   margin-top: -5px;
   margin-bottom: 5px;
 }
 
 .word.on {
   font-size: 4rem;
-  letter-spacing: 0.2em;
-  transform: scaleX(1.4);
-  margin-top: -10px; /* moves ON upward closer to GO */
+  letter-spacing: 0.05em; /* less space between O and N */
+  transform: scaleX(1.2);
+  margin-top: -10px;
   margin-bottom: -5px;
 }
 
 .word.luhv {
   font-size: 2.3rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-shadow: 0 0 8px rgba(255,255,255,0.4);
   margin-top: -2px;
 }
@@ -101,7 +102,7 @@ iframe.chart {
 </div>
 
 <script>
-const v = Date.now(); // cache-busting
+const v = Date.now();
 document.querySelector('.bg').src = `background.html?v=${v}`;
 document.querySelector('.chart').src = `chart.html?v=${v}`;
 </script>
