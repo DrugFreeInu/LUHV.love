@@ -26,10 +26,22 @@ iframe.bg {
   z-index: 0;
 }
 
+iframe.chart {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 60%;
+  border: none;
+  border-radius: 12px;
+  z-index: 1;
+}
+
 .main {
   position: relative;
-  z-index: 1;
-  height: 100%;
+  z-index: 2;
+  height: 40%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,6 +60,7 @@ h1 {
 <body>
 
 <iframe class="bg" src="background.html"></iframe>
+<iframe class="chart" src="chart.html"></iframe>
 
 <div class="main">
   <h1>GO LONG ON LUHV 💗</h1>
